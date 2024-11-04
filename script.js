@@ -62,9 +62,26 @@ function getLearnerData(course, assignmentGroup, submissions) {
         const dueDate = parseDate(assignment.due_at);
         const submitDate =parseDate(submission.submitted_at);
         // console.log(`score => ${score}, due date => ${dueDate}, submit date ${submitDate}`);
+        if(submitDate > dueDate) {
+            score *= .9;
+        }
+        const percentage =score / possiblePoints;
+        // console.log(percentage)
+        if(!learners[learnerID]) {
+            learners[learnerID] = { id: learnerID, avg: 0, totalScore: 0, totalPossible: 0 };
+        }
+        learners[learnerID][assignmentID] = percentage;
+        learners[learnerID].totalScore += score;
+        learners[learnerID].totalPossible += possiblePoints;
+    });
+    const results = Object.values(learners).map(learner => {
+        learner.avg = learner.totalScore / learner.totalPossible;
+        delete learner.totalScore;
+        delete learner.totalPossible;
+        return learner
     })
+    return results
 }
-
 const result = getLearnerData(CourseInfo, AssignmentGroup, LearnerSubmissions);
+console.log(result);
 
-// console.log(result);
