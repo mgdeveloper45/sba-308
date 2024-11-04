@@ -25,10 +25,12 @@ const LearnerSubmissions = [
 function parseDate(date) {
     return new Date(date);
 }
-console.log(parseDate(LearnerSubmissions[0].submission.submitted_at))
+// console.log(parseDate(LearnerSubmissions[0].submission.submitted_at))
 
-function getLearnerData(course, ag, submissions) {
-    
+function getLearnerData(course, assignmentGroup, submissions) {
+    if(assignmentGroup.course_id !== course.id) {
+        throw new Error("Assignment Group does not belong to the Course Info");
+    }
     // here, we would process this data to achieve the desired result.
     
 
