@@ -31,10 +31,16 @@ function getLearnerData(course, assignmentGroup, submissions) {
     if(assignmentGroup.course_id !== course.id) {
         throw new Error("Assignment Group does not belong to the Course Info");
     }
-    // here, we would process this data to achieve the desired result.
     
+    const todaysDate = new Date();
+    const assignmentMap = {}
 
-    // return result;
+    assignmentGroup.assignments.forEach(assignment => {
+        console.log(assignment.due_at)
+        if(parseDate(assignment.due_at) < todaysDate) {
+            assignmentMap[assignment.id] = assignment
+        }
+    })
 }
 
 const result = getLearnerData(CourseInfo, AssignmentGroup, LearnerSubmissions);
