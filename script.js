@@ -33,13 +33,26 @@ function getLearnerData(course, assignmentGroup, submissions) {
     }
     
     const todaysDate = new Date();
-    const assignmentMap = {}
+    const assignmentMap = {};
 
     assignmentGroup.assignments.forEach(assignment => {
-        console.log(assignment.due_at)
+        // console.log(assignment.due_at)
         if(parseDate(assignment.due_at) < todaysDate) {
-            assignmentMap[assignment.id] = assignment
+            assignmentMap[assignment.id] = assignment;
         }
+    })
+    // console.log(assignmentMap)
+    const learners = {};
+
+    submissions.forEach(sub => {
+        const learnerID = sub.learner_id;
+        const assignmentID = sub.assignment_id;
+        const submission = sub.submission;
+
+        if(!(assignmentID in assignmentMap)) {
+            return;
+        }
+        
     })
 }
 
