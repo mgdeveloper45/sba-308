@@ -48,11 +48,20 @@ function getLearnerData(course, assignmentGroup, submissions) {
         const learnerID = sub.learner_id;
         const assignmentID = sub.assignment_id;
         const submission = sub.submission;
-
+        // console.log(learnerID, assignmentID, submission)
         if(!(assignmentID in assignmentMap)) {
             return;
         }
-        
+        const assignment = assignmentMap[assignmentID];
+        const possiblePoints = assignment.points_possible;
+        // console.log(`points => ${possiblePoints}`)
+        if(possiblePoints === 0) {
+            return;
+        }
+        let score = submission.score;
+        const dueDate = parseDate(assignment.due_at);
+        const submitDate =parseDate(submission.submitted_at);
+        // console.log(`score => ${score}, due date => ${dueDate}, submit date ${submitDate}`);
     })
 }
 
